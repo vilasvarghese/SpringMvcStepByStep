@@ -9,8 +9,9 @@ Before we start with the Flows, we need to configure application to use Spring M
 #Rename the package webapp as "com.vilas.mvc"
 
 ## Useful Snippets
-# Update pom.xml to 
 # Check "maven dependencies" in Libraries
+
+# Update pom.xml to 
 # You may pick this value from https://mvnrepository.com/
 pom.xml
 ```
@@ -42,6 +43,9 @@ web.xml
 	        <url-pattern>/spring-mvc/*</url-pattern>
 	    </servlet-mapping>
 ```
+Here we have configured a servlet to the Spring DispatcherServlet.
+Configured all url pattern /spring-mvc/ work with the Spring DispatcherServlet 
+
 todo-servlet.xml
 ```
 	<beans xmlns="http://www.springframework.org/schema/beans"
