@@ -1,7 +1,7 @@
 ## Objective : Configure Spring MVC
 
 Before we start with the Flows, we need to configure application to use Spring MVC
-- Lets do a little bit of Refactoring. Mini Step 1: Rename package webapp to com.in28minutes.jee
+- Lets do a little bit of Refactoring. Mini Step 1: Rename package webapp to com.vilas.jee
 - We need Spring MVC Framework and its dependencies. Mini Step 2 : Add required jars to the project
 - Spring MVC uses Front Controller Pattern -> Dispatcher Servlet. Mini Step 3 : Add Dispatcher Servlet to web.xml
 - DispatcherServlet needs an Spring Application Context to launch. We will create an xml (/WEB-INF/todo-servlet.xml). Mini Step 4: Add Spring Context
@@ -44,7 +44,7 @@ todo-servlet.xml
 	    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	    <context:component-scan base-package="com.in28minutes" />
+	    <context:component-scan base-package="com.vilas" />
 	
 	    <mvc:annotation-driven />
 	    
@@ -118,7 +118,7 @@ package com.in28minutes.jee;
 
 public class LoginService {
 	public boolean validateUser(String user, String password) {
-		return user.equalsIgnoreCase("in28Minutes") && password.equals("dummy");
+		return user.equalsIgnoreCase("vilas") && password.equals("vilas");
 	}
 
 }
@@ -178,7 +178,7 @@ public class LoginServlet extends HttpServlet {
     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.in28minutes" />
+    <context:component-scan base-package="com.vilas" />
 
     <mvc:annotation-driven />
     
