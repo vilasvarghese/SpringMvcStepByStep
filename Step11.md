@@ -6,7 +6,12 @@ Before we start with the Flows, we need to configure application to use Spring M
 - Spring MVC uses Front Controller Pattern -> Dispatcher Servlet. Mini Step 3 : Add Dispatcher Servlet to web.xml
 - DispatcherServlet needs an Spring Application Context to launch. We will create an xml (/WEB-INF/todo-servlet.xml). Mini Step 4: Add Spring Context
 
+#Rename the package webapp as "com.vilas.mvc"
+
 ## Useful Snippets
+# Update pom.xml to 
+# Check "maven dependencies" in Libraries
+# You may pick this value from https://mvnrepository.com/
 pom.xml
 ```
 		<dependency>
@@ -15,6 +20,9 @@ pom.xml
 			<version>4.2.2.RELEASE</version>
 		</dependency>
 ```
+# Check "maven dependencies" in Libraries
+
+
 web.xml
 ```
 	    <servlet>
