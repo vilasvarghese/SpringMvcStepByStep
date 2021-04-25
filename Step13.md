@@ -6,6 +6,7 @@
 
 ## Snippets
 
+#In todo-servlet.xml
 ```
   <bean
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
