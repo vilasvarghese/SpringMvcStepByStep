@@ -72,6 +72,17 @@
 	</build>
 </project>
 ```
+### /src/main/resources/log4j.properties
+
+```
+org.springframework=Everything
+log4j.rootLogger=TRACE, Appender1, Appender2
+log4j.appender.Appender1=org.apache.log4j.ConsoleAppender
+log4j.appender.Appender1.layout=org.apache.log4j.PatternLayout
+log4j.appender.Appender1.layout.ConversionPattern=%-7p %d [%t] %c %x
+
+#TRACE, #DEBUG, #INFO, #WARN, #ERROR
+```
 ### /src/main/java/com/in28minutes/jee/LoginService.java
 ```
 package com.in28minutes.jee;
