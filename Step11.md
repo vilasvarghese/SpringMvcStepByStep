@@ -190,7 +190,7 @@ public class LoginServlet extends HttpServlet {
     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.in28minutes" />
+    <context:component-scan base-package="com.vilas.mvc" />
 
     <mvc:annotation-driven />
     
