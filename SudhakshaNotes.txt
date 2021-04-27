@@ -1,0 +1,1266 @@
+Module 1: Introduction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+https://www.youtube.com/watch?v=BjNhGaZDr0Y
+https://github.com/vilasvarghese/SpringMvcStepByStep
+	Spring MVC Primer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://medium.com/thecodefountain/spring-mvc-primer-introduction-to-spring-mvc-c3178e39e715
+
+
+
+Define
+	IOC and DI
+		My solution
+	Setter and Constructor injection
+		https://www.youtube.com/watch?v=F0oK42CwCuo&list=PL3NrzZBjk6m-nYX072dSaGfyCJ59Q5TEi&index=3
+	Autowiring in spring
+		https://www.youtube.com/watch?v=aULu-QRagXI&list=PL3NrzZBjk6m-nYX072dSaGfyCJ59Q5TEi&index=6
+
+
+
+Model View Controller (usually known as MVC) 
+	software design pattern 
+	architecture
+	framework
+	commonly used for developing user interfaces 
+	divides the related program logic into three interconnected yet isolated elements. 
+	Separate internal representations of information from 
+		ways information is presented 
+		to and accepted from the user.
+
+
+
+	Segregates an application into three components — 
+		Model, 
+		View, and 
+		Controller. 
+	Each of these components is assigned with a defined responsibility. 
+	
+	Model 
+		manages the application data 
+		decouples the data from its representations (views). 
+		
+	view 
+		presentation of the model data. 
+		Can be a UI component (JSP/HTML page)
+			an XML or 
+			PDF document, 
+			JSON data or an 
+			RSS or 
+			Atom feed. 
+	
+	Controller 
+		accepts input and 
+		converts it to the command for model or view.
+
+	Spring WebMVC 
+		commonly knows as Spring MVC 
+		
+		implementation of this MVC design pattern 
+		build on top of Servlet API 
+		integrated with Spring framework.
+
+
+
+
+
+	What is a Servlet? What is a jsp?
+
+
+
+	Spring MVC Architecture and Components
+	--------------------------------------
+	Problems in Enterprise Application development with Servlet and JSP Technology:
+		Servlet and code are not reusable
+		Web designing tools can’t be used in the case of the servlet.
+		Parallel development is not possible
+
+
+	Solution:
+		Model 1 (page-centric model) and
+		Model 2 (MVC)
+
+
+	Model 1 - Page Centric Model
+	----------------------------
+	The request is sent by the browser and received by JSP
+
+	Request -> jsp page [not to a servlet] 
+		Either jsp page directly fires query
+		or calls a class which processes and returns a list or model like object.
+
+	Page Centric Model - Workflow
+
+	Disadvantages of Page Centric Model include:
+		No clear separation of responsibilities
+		JSP acts as both controller and view
+		The business logic may be separated using Java Bean
+
+
+	Model 2 - Spring MVC Model
+	--------------------------
+	Request -> servlet = controller
+	servlet can actually connect to the model Java Bean
+		which may map to the data source using ORM like hibernate.
+
+
+	Spring MVC Model - Workflow
+	---------------------------
+	Requests -> Controller or Servlet receives  from the browser and captures the input
+	Controller invokes the business method of java bean
+	Java bean connects with the database and gets business data
+		The model is formed in the controller.
+	Bean sends the response to the controller 
+		(keeps the process data in heap memory request, session, and Servlet context)
+	Controllers switch the control to appropriate view of the application
+		passes the Controller
+
+
+	Advantages Spring MVC Model
+		Clear separation of responsibilities
+		Code reusability
+		Single point entry for the application
+		Support for multiple view technologies
+
+
+
+	
+	Front Controller Design Pattern
+	-------------------------------
+	What is the Front Controller Design pattern
+
+	Refer diagram in https://medium.com/thecodefountain/spring-mvc-primer-introduction-to-spring-mvc-c3178e39e715
+
+	Front Controller 
+		standard design pattern where a single controller (Servlet in our context) 
+			is responsible for handling all request processing. 
+		The actual processing is done by different other configurable delegated components.
+
+	Refer diagram above 
+	All requests to the application are attended by the Front Controller. 
+	The request is then delegated to a controller
+		returns a model containing the data to be rendered. 
+		The model is then provided to the view template for rendering. 
+		Finally, the Front Controller sents out the response to the caller.
+
+	
+	Dispatcher Servlet
+	------------------
+	DispatcherSevlet 
+		(It's a standard Java Servlet) 
+		front controller in Spring MVC. 
+		Can be configured by means of a 
+			web.xml
+			ServletContainerInitializer or through 
+			Spring's AbstractAnnotationConfigDispatcherServletInitializer
+
+	Actors of Spring MVC
+	--------------------
+	User: 
+		Application user/API
+	Front Controller: 
+		Spring DispatcherServlet 
+		Responsible for accepting the request from users 
+		delegate and orchestrates the request with other internal components for processing
+		
+	Handler Mapper: 
+		Responsible to find the appropriate controller that can serve the incoming request
+	Controller: 
+		Processes the request. 
+		It invokes the underlying business and repository services. 
+		It warps the response data in a model
+	View Resolver: 
+		Responsible to find the appropriate view which can handle the request
+	View: 
+		The component on which the processed data (the model returned by the controller) is rendered
+
+
+	Communication between components in Spring MVC
+	----------------------------------------------
+	Refer 2nd image in https://medium.com/thecodefountain/spring-mvc-primer-introduction-to-spring-mvc-c3178e39e715
+	
+	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Spring MVC
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html
+The Spring Web model-view-controller (MVC) framework 
+	designed around a DispatcherServlet 
+		dispatches requests to handlers
+			with configurable handler mappings
+			view resolution
+			locale and
+			theme resolution as well as support for uploading files. 
+	
+	default handler 
+		based on the @Controller and @RequestMapping annotations
+		offering a wide range of flexible handling methods. 
+		With the introduction of Spring 3.0
+			@Controller mechanism also allows you to create 
+				RESTful Web sites 
+				and applications
+					through the @PathVariable annotation and other features.
+
+“Open for extension...”
+-----------------------
+A key design principle in Spring Web MVC [and in Spring in general] 
+	"The Open-Closed Principle" http://www.objectmentor.com/resources/articles/ocp.pdf
+		“Open for extension
+		closed for modification” principle.
+
+Some methods in the core classes of Spring Web MVC are marked final. 
+Developer you cannot override these methods 
+	These are carefully implemented with above principle in mind.
+
+
+
+In Spring Web MVC 
+	we can use any object/class as a 
+		command or 
+		form-backing object; 
+	No need to implement a framework-specific interface or base class. 
+	Spring's data binding is highly flexible: 
+		for example, 
+			Treats type mismatches as validation errors 
+			Can be evaluated by the application
+				not as system errors. 
+		
+		
+	Spring's view resolution is extremely flexible. 
+	Controller 
+		responsible for 
+			preparing a model 
+			Map with data 
+			selecting a view name 
+			write directly to the response stream 
+			and complete the request. 
+		View name resolution is highly configurable through 
+			file extension or 
+			Accept header content type negotiation, 
+			through 
+				bean names
+				a properties file
+				or even a custom ViewResolver implementation. 
+	The model (the M in MVC)
+		Map interface
+		allows for the complete abstraction of the view technology. 
+		Can integrate directly with technologies like 
+			JSP, 
+			Velocity 
+			Freemarker
+		or directly generate 
+			XML, 
+			JSON, 
+			Atom
+			and many other types of content. 
+			
+
+Features of Spring Web MVC
+--------------------------
+https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-features
+
+	Clear separation of roles. 
+		Each role — 
+			controller, 
+			validator, 
+			command object
+			form object
+			model object
+			DispatcherServlet
+			handler mapping
+			view resolver
+				can be fulfilled by a specialized object.
+
+	Configuration of both framework and application classes as JavaBeans. 
+		Configuration capability 
+			easy referencing across contexts
+				such as from web controllers to business objects and validators.
+
+	Adaptability, non-intrusiveness, and flexibility. 
+		Define any controller method signature you need
+			possibly using one of the parameter annotations (such as @RequestParam, @RequestHeader, @PathVariable, and more) for a given scenario.
+
+	Reusable business code
+		No need for duplication. 
+		Use existing business objects as 
+			command or 
+			form objects 
+				instead of mirroring them to extend a particular framework base class.
+
+	Customizable binding and validation. 
+		Type mismatches as application-level validation errors that 
+			keep the offending value, 
+			localized date and 
+			number binding etc 
+		instead of String-only form objects with manual parsing and conversion to business objects.
+
+	Customizable handler mapping and view resolution. 
+		Handler mapping and view resolution strategies range from simple URL-based configuration, to sophisticated, purpose-built resolution strategies. Spring is more flexible than web MVC frameworks that mandate a particular technique.
+
+	Flexible model transfer. 
+		Model transfer with a name/value Map 
+		supports easy integration with any view technology.
+
+	Customizable locale and theme resolution, support for JSPs 
+		with or without Spring tag library
+		support for JSTL
+		support for Velocity 
+			without the need for extra bridges, and so on.
+
+	A simple yet powerful JSP tag library [called Spring tag library] 
+		provides support for features such as data binding and themes. 
+		The custom tags allow for maximum flexibility in terms of markup code. 
+
+	A JSP form tag library
+		introduced in Spring 2.0
+		makes writing forms in JSP pages much easier. 
+		
+	Beans whose lifecycle is scoped to the current HTTP request or HTTP Session. 
+		Feature of the WebApplicationContext container(s) that Spring MVC uses. 
+			
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Spring Web Modules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	Refer my slides for Spring Core modules
+	
+	Spring MVC modules
+	------------------
+	
+	Web
+		The web context module 
+		Built on top of the application context module 
+		Provide context for web-based applications
+		The Web module also simplifies the work of processing 
+			multi-part requests and 
+			binding request parameters to domain objects. 
+		The web layer includes 
+			Web, 
+			Web-Servlet, 
+			Web-Struts 
+			Web Porlet modules
+
+	Web module (spring-web.jar): 
+		Provides basic Web-oriented integration featurese.g. 
+			multi-file upload
+			using Servlet listeners to initialize the IoC container
+			Web-oriented application context. 
+			It also contains the relevant parts of the Web in Spring remote support
+	Core jar
+		spring-beans.jar
+		spring-context.jar
+		spring-core.jar
+		spring-expression.jar
+
+	Other jar's part of the basic framework	
+		spring-aop.jar
+			Aspect oriented programming
+		spring-jcl.jar
+			 mandatory logging dependency in Spring is the Jakarta Commons Logging API (JCL)
+		spring-webmvc.jar
+			mvc - especially servlets - e.g. DispatchServlet
+	
+	Other web based modules.
+	------------------------	
+	Web-Servlet module web.servlet.jar: 
+		This module contains Spring's model-view-controller (MVC) implementation. 
+		Spring's MVC framework makes it possible to 
+			clearly separate the code within the model range and web forms
+			compatible with Spring The other features of the framework are based together
+	Web-Struts module: 
+		Provides support for Struts
+		classes can be integrated with a typical Struts Web layer in Spring applications
+	Web-Porlet module: 
+		Provides the implementation of MVC for Portlet environment and Web-Servlet module
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Spring MVC Components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Spring MVC - Components
+-----------------------
+	DispatcherServlet (org.springframework.web.servlet )
+	HandlerMapping (org.springframework.web.servlet)
+	Controller
+	ModeAndView (org.springframework.web.servlet)
+	ViewResolver
+
+
+DispatcherServlet (org.springframework.web.servlet )
+	Already covered
+
+HandlerMapping (org.springframework.web.servlet)
+--------------
+	HandlerMapping: an interface 
+	Implemented by objects to define the mapping between 
+		request 
+		handler objects. 
+	When a request is made to Spring’s dispatcher servlet
+		it hands over the request to handler mapping.
+
+	Handler mapping 
+		inspects the request, 
+		identifies the appropriate handler execution chain
+			and delivers it to DispatcherServlet.
+
+	Example:
+	Handler mapping provided by Spring’s MVC module can be implemented in many ways.
+
+	BeanNameUrlHandlerMapping: 
+		Default handler mapping class 
+		maps the URL request to the names of the beans.
+
+	<bean…>
+		<bean class=“org.springframework.web.servlet.handler.
+		BeanNameUrlHandlerMapping”/>
+		<bean name=“/welcome.htm” class=“WelcomeController”/>
+		<bean name=“/streetName.htm” class=“StreetNameController”/>
+		<bean name=“/process*.htm” class=“ProcessController”/>
+
+	If URL pattern:
+		/welcome.htm is requested; 
+			DispatcherServlet will forward the request to the “WelcomeController”
+		/streetname.htm is requested; 
+			DispatcherServlet will forward the request to the “StreetNameController”
+		/process(anything).htm is requested; 
+			DispatcherServlet will forward the request to the “ProcessController”
+
+
+
+Controller
+----------
+	Components called by the Dispatcher Servlet for any kind of Business logic. 
+	All controllers implement the Controller interface.
+
+	The types of controllers are:
+		Abstract Controller
+		MultiAction Controller
+		AbstractWizardFormController
+
+
+ModeAndView (org.springframework.web.servlet)
+--------------------------------------------------
+	ModelAndView 
+		Represented by class.org.springframework.web.servlet.ModelAndView 
+		Returned by the Controller object back to the DispatcherServlet.
+
+	A container class 
+		hold the the information of 
+			model and 
+			view. 
+	Model object represents some piece of information 
+		can be used by the View to display the information.
+
+	These give abstraction in the Spring framework. 
+	Any kind of View Technology (org.springframework.web.servlet.View) 
+		can be plugged into the framework. View can be
+			Excel, 
+			Jasper Reports, 
+			Pdf, 
+			Xslt, 
+			freeMarker, 
+			Html, 
+			Tiles are supported frameworks.
+
+	Example:
+
+	ModelAndView mv=new ModelAndView(“successView”, “greetingMsg”, “greetingMessage);
+
+ViewResolver
+-------------
+	ViewResolver 
+		An interface 
+		Implemented by objects to resolve views using name.
+	To resolve view object, 
+		DispatcherServlet uses ViewResolver.
+	Provide a mapping between 
+		Logical View Name and the actual Physical Location of the View Resource.
+
+	Types of ViewResolver
+		BeanNameViewResolver
+			Resolves the logical name of the view to the bean name
+			Bean will render the output to the user. 
+			The bean should be defined in the Spring app context file.
+
+		InternalResourceViewResolver
+			Resolves the logical name of the view to an internal resource 
+				by prefixing the logical view name 
+				with the resource path and 
+				suffixing it with the extension.
+
+
+		XMLFileViewResolver
+			Similar to BeanNameViewResolver. 
+			Difference: instead of looking for the beans in Spring’s application context 
+				looks for beans defined in a separate XML file.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	web.xml
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+welcome-file-list in web.xml
+	The welcome-file-list element of web-app, is used to define a list of welcome files. Its sub element is welcome-file that is used to define the welcome file.
+
+	A welcome file is the file that is invoked automatically by the server, if you don't specify any file name.
+
+	By default server looks for the welcome file in following order
+	
+	welcome-file-list in web.xml
+		index.html
+		index.htm
+		index.jsp
+		If none of these files are found, server renders 404 error.
+
+	If you have specified welcome-file in web.xml, and all the files index.html, index.htm and index.jsp exists, priority goes to welcome-file.
+
+	If welcome-file-list entry doesn't exist in web.xml file, priority goes to index.html file then index.htm and at last index.jsp file.
+
+
+	Further reference:
+	https://cloud.google.com/appengine/docs/standard/java/config/webxml
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	The DispatcherServlet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Refer to the image in 
+https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-servlet
+
+
+Spring's web MVC framework 
+	request-driven, 
+	designed around a central Servlet 
+	dispatches requests to controllers 
+	offers other functionality that facilitates the development of web applications. 
+	
+	What else does Spring's DispatcherServlet do
+	Completely integrated with the Spring IoC container 
+		gives access to features that Spring support.
+
+	Refer the diagram : 
+		Request processing workflow of the Spring Web MVC DispatcherServlet. 
+		DispatcherServlet is an expression of the “Front Controller” design pattern 
+			
+
+The DispatcherServlet 
+	Servlet 
+	Inherits from the HttpServlet
+	Declared in the web.xml of your web application. 
+	You need to map requests that you want the DispatcherServlet to handle
+	by using a URL mapping in the same web.xml file. 
+	This is standard Java EE Servlet configuration; 
+	
+Example shows such a DispatcherServlet declaration and mapping:
+
+<web-app>
+    <servlet>
+        <servlet-name>example</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>example</servlet-name>
+        <url-pattern>/example/*</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+
+
+all requests starting with /example 
+	will be handled by the DispatcherServlet instance named "example". 
+	In a Servlet 3.0+ environment
+		we can configure the Servlet container programmatically. 
+		
+-----------------------------------------------
+public class MyWebApplicationInitializer implements WebApplicationInitializer {
+
+    @Override
+    public void onStartup(ServletContext container) {
+        ServletRegistration.Dynamic registration = container.addServlet("dispatcher", new DispatcherServlet());
+        registration.setLoadOnStartup(1);
+        registration.addMapping("/example/*");
+    }
+
+}
+----------------------------------------------------		
+
+WebApplicationInitializer 
+	interface provided by Spring MVC 
+	Ensures code-based configuration is detected 
+		and automatically used to initialize 
+		any Servlet 3 container. 
+	An abstract base class implementation of this interface named AbstractDispatcherServletInitializer makes it easier to register the DispatcherServlet 
+		by simply specifying its servlet mapping. 
+
+Below is the first step.
+---------------------------------------------------------------
+import org.springframework.web.WebApplicationInitializer;
+
+public class MyWebApplicationInitializer implements WebApplicationInitializer {
+
+    @Override
+    public void onStartup(ServletContext container) {
+        XmlWebApplicationContext appContext = new XmlWebApplicationContext();
+        appContext.setConfigLocation("/WEB-INF/spring/dispatcher-config.xml");
+
+        ServletRegistration.Dynamic registration = container.addServlet("dispatcher", new DispatcherServlet(appContext));
+        registration.setLoadOnStartup(1);
+        registration.addMapping("/");
+    }
+
+}
+-----------------------------------------------------------------
+
+
+The above is only the first step in setting up Spring Web MVC. 
+You now need to configure the various beans used by the Spring Web MVC framework (over and above the DispatcherServlet itself).
+
+As detailed in Section 5.14, “Additional Capabilities of the ApplicationContext”, ApplicationContext instances in Spring can be scoped. In the Web MVC framework, each DispatcherServlet has its own WebApplicationContext, which inherits all the beans already defined in the root WebApplicationContext. These inherited beans can be overridden in the servlet-specific scope, and you can define new scope-specific beans local to a given Servlet instance.
+
+
+		
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Spring MVC Annotated Controllers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	Current trend favor annotations over XML files 
+	To facilitate this Spring since 2.5 
+		provide support for configuring the MVC framework components using annotations.
+
+	Spring 2.5 
+		introduces an annotation-based programming model for MVC controllers
+		using annotations like 
+			@RequestMapping, 
+			@RequestParam
+			@ModelAttribute, etc. 
+	This annotation support is available for both Servlet MVC and Portlet MVC. 
+	Controllers implemented in this style 
+		do not have to extend specific base classes 
+		implement specific interfaces. 
+	Furthermore
+		No direct dependencies on Servlet or Portlet API's, although they can easily get access to Servlet or Portlet facilities if desired.
+
+
+
+
+Setting up the dispatcher for annotation support
+------------------------------------------------
+@RequestMapping 
+	By default in both DispatcherServlet and DispatcherPortlet
+	@RequestMapping will only be processed if a corresponding 
+		HandlerMapping (for type level annotations) and/or 
+		HandlerAdapter (for method level annotations) 
+		is present in the dispatcher.
+	
+	.
+
+However, if you are defining custom HandlerMappings or HandlerAdapters, then you need to make sure that a corresponding custom DefaultAnnotationHandlerMapping and/or AnnotationMethodHandlerAdapter is defined as well - provided that you intend to use @RequestMapping.
+
+----------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+
+    // ... (controller bean definitions) ...
+
+</beans>
+----------------------------------------------------------------------------
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	@RequestMapping
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	@RequestMapping annotation 
+		used to map URLs like '/login.do' onto an 
+			entire class 
+			or a particular handler method. 
+		Typically the type-level annotation maps 
+			a specific request path (or path pattern) 
+			onto a form controller
+		with additional method-level annotations 
+			'narrowing' the primary mapping for a 
+			specific HTTP method request 
+			to method ("GET"/"POST") or specific HTTP request parameters.
+
+
+Further reads: https://docs.spring.io/spring-framework/docs/3.0.0.M3/reference/html/ch16s11.html
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Controller Handler Method Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	https://docs.spring.io/spring-framework/docs/3.0.0.M4/spring-framework-reference/html/ch15s03.html
+	
+	Controllers provide access to the application behavior 
+		define through a service interface. 
+	Controllers 
+		interpret user input 
+		transform it into a model 
+			represented to the user by the view. 
+	
+	Spring 2.5 introduced an annotation-based programming model for MVC controllers 
+	It uses annotations such as 
+		@RequestMapping, 
+		@RequestParam, 
+		@ModelAttribute
+			etc. 
+			
+	Defining a controller with @Controller
+	--------------------------------------
+	@Controller annotation 
+		indicates the class which serves the role of a controller. 
+		No need to extend any 
+			controller base class 
+			reference the Servlet API. 
+	Can still reference Servlet-specific features if you need to do so.
+	The dispatcher scans such annotated classes for mapped methods and detects @RequestMapping annotations (see the next section).
+
+	Define annotated controller beans explicitly
+		using a standard Spring bean definition in the dispatcher's context. 
+	However, the @Controller stereotype also allows for autodetection, aligned with Spring general support for detecting component classes in the classpath and auto-registering bean definitions for them.
+
+	To enable autodetection of such annotated controllers, you add component scanning to your configuration. Use the spring-context schema as shown in the following XML snippet:
+
+------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:component-scan base-package="org.springframework.samples.petclinic.web"/>
+
+    // ...
+
+</beans>
+-----------------------------------------
+
+
+Mapping requests with @RequestMapping
+-------------------------------------
+	@RequestMapping annotation 
+		map URLs such as /appointments onto 
+			an entire class 
+			or a particular handler method. 
+	You can use it to annotate both a class and a method. 
+	Typically the class-level annotation maps a specific request path (or path pattern) onto a form controller, with additional method-level annotations narrowing the primary mapping for a specific HTTP method request method ("GET"/"POST") or specific HTTP request parameters.
+
+For e.g.
+---------------------------------------------------------
+@Controller
+@RequestMapping("/appointments")
+public class AppointmentsController {
+
+    private AppointmentBook appointmentBook;
+    
+    @Autowired
+    public AppointmentsController(AppointmentBook appointmentBook) {
+        this.appointmentBook = appointmentBook;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Appointments get() {
+        return appointmentBook.getAppointmentsForToday();
+    }
+
+    @RequestMapping(value="/{day}", method = RequestMethod.GET)
+    public void getForDay(@PathVariable Date day, ExternalContext context) {
+        Appointments appts = appointmentBook.getAppointmentsForDay(day);
+        context.getModel().addAttribute(appts);
+        context.selectView("appointments");
+        if (context.isAjaxRequest()) {
+            //could activate a ViewHelper for component associated with main
+            context.renderFragment("main");
+        }
+    }
+
+    @RequestMapping(value="/new", method = RequestMethod.GET)
+    public AppointmentForm getNewForm() {
+        return new AppointmentForm();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String post(AppointmentForm form) {
+        appointmentBook.createAppointment(form);
+        return "redirect:/appointments";
+    }
+}
+---------------------------------------------------------
+
+Supported handler method arguments
+----------------------------------
+Handler methods annotated with @RequestMapping can have flexible signatures. 
+
+Arguments can be of types, in arbitrary order. 
+	(except for validation results, which need to follow right after the corresponding command object, if desired):
+
+Request and/or response objects (Servlet API). 
+	Choose any specific request/response type, 
+	for example, 
+		ServletRequest 
+		HttpServletRequest.
+
+Session object (Servlet API): 
+	type HttpSession. 
+	An argument of this type enforces the presence of a corresponding session. 
+	This argument can never be null.
+	Session access may not be thread-safe
+		in particular in a Servlet environment: 
+		Consider switching the 
+			AnnotationMethodHandlerAdapter's "synchronizeOnSession" flag to "true" 
+				if multiple requests are allowed to access a session concurrently.
+
+org.springframework.web.context.request.WebRequest or org.springframework.web.context.request.NativeWebRequest. 
+	Allows for 
+		generic request parameter access 
+		request/session attribute access
+			without ties to the native Servlet/Portlet API.
+
+java.util.Locale for the current request locale
+	determined by the most specific locale resolver available
+		in effect, the configured LocaleResolver in a Servlet environment.
+
+java.io.InputStream / java.io.Reader 
+	to access to the request's content. 
+	This value is the raw InputStream/Reader as exposed by the Servlet API.
+
+java.io.OutputStream / java.io.Writer 
+	to generate the response's content. 
+	This value is the raw OutputStream/Writer as exposed by the Servlet API.
+
+@PathVariabe annotated parameters 
+	for access to URI template variables. 
+	Refer  “URI Templates” in the same document.
+
+@RequestParam annotated parameters 
+	for access to specific Servlet request parameters. 
+	Parameter values are converted to the declared method argument type. 
+		See Section 15.3.2.4, “Binding request parameters to method parameters with @RequestParam”.
+
+@RequestHeader annotated parameters 
+	for access to specific Servlet request HTTP headers. 
+	Parameter values are converted to the declared method argument type.
+
+@RequestBody annotated parameters 
+	for access to the request HTTP body. 
+	Parameter values are converted to the declared method argument type using HttpMessageConverters. 
+	See Section 15.3.2.5, “Mapping the request body with the @RequestBody annotation”.
+
+java.util.Map / org.springframework.ui.Model / org.springframework.ui.ModelMap 
+	for enriching the implicit model that is exposed to the web view.
+
+Command or form objects to bind parameters to: 
+	as bean properties or fields, with customizable type conversion, depending on @InitBinder methods and/or the HandlerAdapter configuration. See the webBindingInitializer property on AnnotationMethodHandlerAdapter. Such command objects along with their validation results will be exposed as model attributes by default., using the non-qualified command class name in property notation. For example, "orderAddress" for type "mypackage.OrderAddress". Specify a parameter-level ModelAttribute annotation for declaring a specific model attribute name.
+
+org.springframework.validation.Errors / org.springframework.validation.BindingResult validation results 
+	for a preceding command or form object 
+	(the immediately preceding argument).
+
+org.springframework.web.bind.support.SessionStatus status handle 
+	for marking form processing as complete, 
+	triggers the cleanup of session attributes that have been indicated by the @SessionAttributes annotation at the handler type level.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Controller Handler Method Return Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	https://docs.spring.io/spring-framework/docs/3.0.0.M4/spring-framework-reference/html/ch15s03.html
+	https://www.codejava.net/frameworks/spring/14-tips-for-writing-spring-mvc-controller
+	https://www.baeldung.com/spring-mvc-model-model-map-model-view
+	
+	Supported handler method arguments and return types
+	---------------------------------------------------
+A ModelAndView object
+	model implicitly enriched with command objects 
+	and the results of @ModelAttribute annotated reference data accessor methods.
+		Refer: https://www.baeldung.com/spring-mvc-and-the-modelattribute-annotation
+
+A Model object
+	the view name implicitly determined through a RequestToViewNameTranslator 
+	and the model implicitly enriched with command objects 
+	and the results of @ModelAttribute annotated reference data accessor methods.
+
+A Map object 
+	for exposing a model
+	with the view name implicitly determined through a RequestToViewNameTranslator 
+	and the model implicitly enriched with command objects 
+	and the results of @ModelAttribute annotated reference data accessor methods.
+
+A View object, with the model implicitly determined through command objects and @ModelAttribute annotated reference data accessor methods. The handler method may also programmatically enrich the model by declaring a Model argument (see above).
+
+A String value that is interpreted as the view name, with the model implicitly determined through command objects and @ModelAttribute annotated reference data accessor methods. The handler method may also programmatically enrich the model by declaring a Model argument (see above).
+
+void if the method handles the response itself (by writing the response content directly, declaring an argument of type ServletResponse / HttpServletResponse for that purpose) or if the view name is supposed to be implicitly determined through a RequestToViewNameTranslator (not declaring a response argument in the handler method signature).
+
+If the method is annotated with @ResponseBody, the return type is written to the response HTTP body. The return value will be converted to the declared method argument type using HttpMessageConverters. See Section 15.3.2.6, “Mapping the response body with the @ResponseBody annotation”.
+
+Any other return type is considered as single model attribute to be exposed to the view, using the attribute name specified through @ModelAttribute at the method level (or the default attribute name based on the return type class name). The model is implicitly enriched with command objects and the results of @ModelAttribute annotated reference data accessor methods.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	View Resolution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	https://docs.spring.io/spring-framework/docs/3.0.0.M3/reference/html/ch16s05.html
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Module 2: Spring Boot
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	What is Spring Boot?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Spring Boot provides 
+a platform for Java developers 
+	to develop 
+		stand-alone 
+		production-grade 
+			spring application 
+Get started with minimum configurations 
+	without the need for an entire Spring configuration setup.
+	highly opionated.
+
+Advantages
+-------------
+	Easy to understand and develop spring applications
+	Increases productivity
+	Reduces the boot up and development time
+	
+Goals
+------
+	To avoid complex XML configuration in Spring
+	To develop a production ready Spring applications in an easier way
+	To reduce the development time and run the application independently
+	Offer an easier way of getting started with the application
+
+Why Spring Boot?
+------------------
+Flexible way to configure 
+	Java Beans, 
+	XML configurations
+	Database Transactions.
+Powerful 
+	batch processing 
+	manages REST endpoints.
+Everything is auto configured; 
+	no manual configurations are needed.
+Annotation-based spring application
+Eases dependency management
+Includes Embedded Servlet Container
+
+
+How does it work?
+-----------------
+Automatically configures your application 
+	based on the dependencies you have added 
+		to the project by using @EnableAutoConfiguration annotation. 
+For example, 
+	if MySQL database is on your classpath
+	and we have not configured any database connection
+	then Spring Boot auto-configures an in-memory database.
+
+Entry point of the spring boot application: 
+	Class with 
+		@SpringBootApplication annotation 
+		and the main method.
+
+Automatically scans all the components included in the current folder and all sub folder.
+
+Spring Boot Starters
+--------------------
+Handle dependency management
+	For example, if you want to use Spring and JPA for database access, it is sufficient if you include spring-boot-starter-data-jpa dependency in your project.
+
+Note that all Spring Boot starters follow the same naming pattern spring-boot-starter- *, where * indicates that it is a type of the application.
+
+Examples
+Look at the following Spring Boot starters explained below for a better understanding −
+
+Spring Boot Starter Actuator dependency is used to monitor and manage your application. Its code is shown below −
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Spring Boot Main Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Features	
+	AutoConfiguration
+		Detects the presence of certain a Class in the Classpath and then automatically configures it for you.
+			e.g. H2 db
+		Saves a lot of work 
+		Reduce the development time 
+		
+	Starter POMs
+		To build a simple Spring MVC-based REST application that supports Jackson 
+			and to run it an embedded container
+			you would at least need the following dependencies:
+
+		spring-core.jar
+		spring-web.jar
+		spring-webmvc.jar
+		jackson-databind.jar
+		tomcat-embed-core.jar
+		tomcat-embed-el.jar
+		tomcat-embed-logging-juil.jar
+
+		Get all these by adding 
+			spring-boot-starter-web dependency in your pom.xml
+			
+	Spring Boot CLI
+		command line interface provided by the Spring Boot framework
+		Spring Boot CLI detect that @RestController and @RequestMapping are in use, and it knows which starter dependencies are required to add into classpath to make it work.
+		
+	Actuator
+		Actuator is another awesome feature of Spring Boot that allows seeing what's going on inside a running Spring Boot application. 
+		
+		
+	Spring Boot Initializer
+		Spring Initializer project can be accessed at https://start.spring.io/
+		download the Zip file and then open into an IDE like Eclipse or IntelliJ IDEA
+		
+Reference:https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html
+	SpringApplication
+		SpringApplication class 
+			provides a convenient way to bootstrap a Spring application 
+				started from a main() method. 
+	
+	 Startup Failure
+		If your application fails to start, registered FailureAnalyzers get a chance to provide a dedicated error message and a concrete action to fix the problem.
+		if you start a web application on port 8080, we get a clear error message.
+		
+	Lazy Initialization
+		SpringApplication allows an application to be initialized lazily. When lazy initialization is enabled, beans are created as they are needed rather than during application startup.
+		Enabling lazy initialization can reduce the time that it takes your application to start. 
+		Set the following property to true
+		spring.main.lazy-initialization=true
+				
+	Customizing the Banner
+		banner that is printed on start up can be changed by adding a banner.txt file to your classpath or by setting the spring.banner.location property to the location of such a file
+		
+		Refer: https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html for a list of properties that can be set.
+		
+	Customizing SpringApplication
+		If the SpringApplication defaults are not to your taste
+			instead create a local instance and customize it.
+			e.g.
+--------------------------------
+public static void main(String[] args) {
+    SpringApplication app = new SpringApplication(MySpringConfiguration.class);
+    app.setBannerMode(Banner.Mode.OFF);
+    app.run(args);
+}
+--------------------------------
+
+	Fluent Builder API
+		If you need to build an ApplicationContext hierarchy (multiple contexts with a parent/child relationship) or if you prefer using a “fluent” builder API, you can use the SpringApplicationBuilder.
+		SpringApplicationBuilder lets you chain together multiple method calls and includes parent and child methods that let you create a hierarchy,
+--------------------------------
+new SpringApplicationBuilder()
+        .sources(Parent.class)
+        .child(Application.class)
+        .bannerMode(Banner.Mode.OFF)
+        .run(args);
+--------------------------------
+		
+	Application Availability
+		applications can provide information about their availability to the platform using infrastructure such as Kubernetes Probes. 
+		Spring Boot includes out-of-the box support for the commonly used “liveness” and “readiness” availability states. 
+		
+		Liveness State
+			 “Liveness” state of an application tells whether its internal state allows it to work correctly, or recover by itself if it’s currently failing. 
+			broken “Liveness” state 
+				application is in a state that it cannot recover from
+				the infrastructure should restart the application.
+
+			Internal state of Spring Boot applications is mostly represented by the Spring ApplicationContext
+			If the application context has started successfully, Spring Boot assumes that the application is in a valid state. An application is considered live as soon as the context has been refreshed
+
+		Readiness State
+			“Readiness” state 
+				application is ready to handle traffic. 
+				A failing “Readiness” state tells the platform 
+					don't route traffic to the application for now. 
+					Typically happens during startup
+						while CommandLineRunner and ApplicationRunner components are being processed
+						or at any time if the application decides that it’s too busy for additional traffic.
+
+	Many more features
+		Kindly read https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html
+
+
+	Makes web dev. easy
+	Makes RESTful service dev. easy
+	Application Events and Listeners
+		Spring Boot uses events to handle variety of tasks. 
+		Allows us to create factories file that are used to add listeners. 
+		we can refer it by using ApplicationListener key.
+			META-INF/spring.factories
+	Admin Support
+		Spring Boot provides the facility to enable admin related features for the application. It is used to access and manage application remotely. We can enable it by simply using spring.application.admin.enabled property.
+		
+	Externalized Configuration
+		Properties Files
+		Drive from CLI
+		Property server
+	YAML support
+	Type-safe Configuration
+		Provided to govern and validate the configuration of application.
+	Logging
+		Spring Boot uses Common logging for all internal logging. Logging dependencies are managed by default
+	Security
+		Pluggable security.
+	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Using Spring CLI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-cli.html
+	java -jar <your service build>.war / .jar
+	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Example of Spring MVC-based RESTful Web Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	Reference video series:
+	https://www.youtube.com/watch?v=4qBvR7BKOTI&list=PLtUIbLoyHO9fUj4abxgdghIfBIezTcvnc&index=3
+	https://www.java-success.com/category/java-engineers/0006-spring/02-spring-mvc/
+	
+	https://www.java-success.com/setting-apache-tomcat-application-server/
+	https://www.java-success.com/spring-mvc-beginner-tutorial-step-step/
+	https://www.java-success.com/05-spring-4-mvc-restful-web-service-beginner-tutorial-step-step/
+	
+		N.B: What didn't work for me.
+			tomcat7 didn't work.
+			So updated the tomcat as tomcat9 using the following plugin
+			
+---------------------------------------------
+                <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.8.3</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <type>embedded</type>
+                    </container>
+                    <deployables>
+                        <deployable>
+                            <type>war</type>
+                            <location>${project.build.directory}/${project.build.finalName}.war</location>
+                            <properties>
+                                <context>/</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
+			
+---------------------------------------------
+goal in the maven build should be "package cargo:run"
+Reference: https://stackoverflow.com/questions/41326911/maven-plugin-for-tomcat-9
+
+
+	Reference for mvc post: https://www.java-success.com/06-spring-4-mvc-restful-get-post-methods-web-services-tutorial/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Spring Booting Basic RESTful Web Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Spring Boot Skeletal Application Example
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Externalized Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Logging
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Module 3: Microservices
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	What are Microservices?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Decentralized Governance, Scalability, Fault Tolerance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Cloud Computing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Spring Cloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Service and Client Discovery
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Netflix OSS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+https://netflix.github.io/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Module 4: Netflix OSS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Service Discovery
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Eureka Servers and Clients
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Load Balancing with Ribbon using Eureka
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Load Balancing with Ribbon without Eureka
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Module 5: Communication between microservices
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Introduction to Feign
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Configuring Feign
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	To train on Webcast as well
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Module 6: Circuit Breakers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	When services fail
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Circuit Breakers - Hystrix
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Access services using Feign REST client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Module 7: Sleuth and Zipkin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Logging with Sleuth
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Monitor with Zipkin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Module 8 : Spring Scheduler and Integration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Introduction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Scheduler - Cron and Delay
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	Integration - FTP ,SSH,HTTPS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Testing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Flux
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	

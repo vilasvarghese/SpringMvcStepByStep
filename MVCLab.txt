@@ -1,0 +1,42 @@
+https://www.youtube.com/watch?v=aULu-QRagXI&list=PL3NrzZBjk6m-nYX072dSaGfyCJ59Q5TEi&index=7
+
+Refer my SpringMvcStepByStep repo.
+
+Lab1
+	Download Step07.zip
+	unzip it
+	import it into eclipse
+		NB: Sometimes you may have to restart eclipse to resolve compiler errors
+		
+	Right click and run "maven build"
+	Goals: tomcat7:run
+	Click "Apply"
+
+	@WebServlet(urlPatterns = "/login.do") in Servlet maps to the login.do in web.xml
+
+
+Lab2
+	Create a new "Dynamic Web Project" project
+		"Other" -> "Dynamic Web Project"
+		Keep clicking "Next"
+		"Generate web.xml deployment descriptor.
+
+	Download spring.jar from 
+	https://maven.springframework.org/release/org/springframework/spring/5.2.8.RELEASE/
+	Unzip it and copy all jar's into the lib folder in eclipse.
+
+
+---------------------------------------------------------------
+	How to setup Tomcat with eclipse
+
+---------------------------------------------------------------
+
+Download Tomcat
+	unzip it
+In Eclipse
+	Windows - "Show views" - Servers
+	Add server - point the location of apach-tomcat... directory.
+
+
+---------------------------------------------------------------
+
