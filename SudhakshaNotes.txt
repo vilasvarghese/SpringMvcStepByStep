@@ -689,6 +689,9 @@ However, if you are defining custom HandlerMappings or HandlerAdapters, then you
 
 Further reads: https://docs.spring.io/spring-framework/docs/3.0.0.M3/reference/html/ch16s11.html
 
+
+Continue................
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Controller Handler Method Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -931,8 +934,8 @@ Advantages
 	
 Goals
 ------
-	To avoid complex XML configuration in Spring
-	To develop a production ready Spring applications in an easier way
+	To avoid complex XML/jar/etc. configuration in Spring
+	To develop a production ready Spring applications in a easier way
 	To reduce the development time and run the application independently
 	Offer an easier way of getting started with the application
 
@@ -980,6 +983,8 @@ Examples
 Look at the following Spring Boot starters explained below for a better understanding −
 
 Spring Boot Starter Actuator dependency is used to monitor and manage your application. Its code is shown below −
+
+Starter project code base: https://github.com/spring-projects/spring-boot/tree/main/spring-boot-project/spring-boot-starters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Spring Boot Main Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1068,6 +1073,8 @@ new SpringApplicationBuilder()
 		
 		Liveness State
 			 “Liveness” state of an application tells whether its internal state allows it to work correctly, or recover by itself if it’s currently failing. 
+			 like 15 people talking to a person.
+			 Without doing anything to the person, if 14 stop speaking, s/he will understand
 			broken “Liveness” state 
 				application is in a state that it cannot recover from
 				the infrastructure should restart the application.
@@ -1078,6 +1085,9 @@ new SpringApplicationBuilder()
 		Readiness State
 			“Readiness” state 
 				application is ready to handle traffic. 
+				While you in the class, you fell asleep/sick.
+				Now either you have to wake up or you have take medicine.
+				
 				A failing “Readiness” state tells the platform 
 					don't route traffic to the application for now. 
 					Typically happens during startup
@@ -1113,7 +1123,10 @@ new SpringApplicationBuilder()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Using Spring CLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-cli.html
+	Install
+		https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started-installing-the-cli
+	Use Spring	
+		https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-cli.html
 	java -jar <your service build>.war / .jar
 	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
@@ -1162,39 +1175,256 @@ Reference: https://stackoverflow.com/questions/41326911/maven-plugin-for-tomcat-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Spring Booting Basic RESTful Web Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://github.com/vilasvarghese/microservices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Spring Boot Skeletal Application Example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://github.com/vilasvarghese/microservices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Externalized Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	Drive changes easily.
+		key and value pair.
+	Externalized 
+	Centralized configuration
+	Version management
+	
+	
+	Why configure?
+		don't hardcode.
+		Properties like db username, connect string etc. can be 
+			configured
+			required in multiple places.
+		
+		Feature flags etc..
+		Config changes can sometimes directly pushed to production
+			Already tested and approved
+			
+	Config files
+		xml
+		yaml files
+		json
+		properties
+		
+	Microservices
+		Lot of microservices: sometimes require configuration.
+		
+		
+	Configuration should be 
+		Externalized (property files)
+		Environment specific (Spring profiles)
+		Consistent (Spring cloud config server)
+		Version history (Git repo)
+		Real-time management.
+		
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Logging
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	https://www.baeldung.com/spring-boot-logging
+	
+mvn spring-boot:run -Dspring-boot.run.arguments=--logging.level.org.springframework=TRACE -Dspring-boot.run.arguments=--logging.level.com.hsbg.logging=TRACE
+
+
+	https://springframework.guru/using-logback-spring-boot/
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Module 3: Microservices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	My personal notes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	What are Microservices?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Decentralized Governance, Scalability, Fault Tolerance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	Decentralized Governance
+		Property files
+		Centralized config server
+		
+		
+		
+	Issues possible
+		Instance can go down
+			Soln: Create multiple instances of the microservices.
+			Eureka
+		
+		Microservice is slow.
+		
+	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Cloud Computing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	https://github.com/vilasvarghese/aws/blob/master/Notes/AWSTOC
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Spring Cloud
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://spring.io/projects/spring-cloud
+	
+Spring Cloud 
+	Tools to quickly build some of the common patterns in distributed systems 
+		(e.g. 
+		configuration management, 
+		service discovery, 
+		circuit breakers, 
+		intelligent routing, 
+		micro-proxy, 
+		control bus, 
+		one-time tokens, 
+		global locks, 
+		leadership election, 
+		distributed sessions, 
+		cluster state). 
+
+Features
+Spring Cloud focuses on providing good out of box experience for typical use cases and extensibility mechanism to cover others.
+
+	Distributed/versioned configuration
+	Service registration and discovery
+	Routing
+	Service-to-service calls
+	Load balancing
+	Circuit Breakers
+	Global locks
+	Leadership election and cluster state
+	Distributed messaging
+
+
+Adding Spring Cloud To An Existing Spring Boot Application
+----------------------------------------------------------
+1. Determine the version of Spring Cloud you should use. 
+	depend on the version of Spring Boot you are using.
+
+Refer table in https://spring.io/projects/spring-cloud#overview
+
+2. Add the "dependency management" and version to the pom.xml
+---------------------------------------------
+<properties>
+    <spring.cloud-version>Hoxton.SR8</spring.cloud-version>
+</properties>
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring.cloud-version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+---------------------------------------------
+
+3. Identify the dependencies 
+	Spring Cloud projects also include starters 
+		add them as dependencies to add various cloud native features to your project. 
+	Features can be enabled by adding the starter to your classpath. 
+	
+	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Service and Client Discovery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	https://github.com/vilasvarghese/microservices/blob/master/training/day3/EurekaServiceDiscovery/EurekaInstructions.txt
+	https://github.com/vilasvarghese/microservices/blob/master/training/day3/EurekaServiceDiscovery/DependenciesIncaseOfFailures.txt
+	
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Netflix OSS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 https://netflix.github.io/
 
+Netflix OSS 
+	set of frameworks and libraries wrote by Netflix 
+	Solve some common microservices distributed-systems problems at scale. 
+	
+	for e.g. Patterns for 
+		service discovery, 
+		load balancing, 
+		fault-tolerance, etc are solved by Netflix 
+	
+	Netflix OSS 
+		written when there were no alternatives. 
+		
+So that brings us to point #1.
+	Microservices can be implemented in a variety of frameworks/languages 
+	things like (3 most used featuers)
+		service discovery, 
+		load balancing, 
+		fault-tolerance, etc are still quite important. 
+
+	
+	
+	Client-side load balancing?
+		Netflix wrote Eureka and Ribbon 
+		Combinations - can enable client-side load balancing. 
+		Service registry 
+			(Eureka/Consul/Zookeeper/etc) will keep track of services exist in a cluster 
+			AND sending that data to clients that are interested in this. Then, since the client has information about what nodes are in the cluster, it can pick one (randomly, sticky, or some custom algorithm) and then call it. On it’s next call, it can pick a different service in the cluster if it so desires. The advantages here are we don’t need physical/soft loadbalancers which could quickly become a bottleneck. Another important aspect: since the client knows where the service is, the client can contact the service provider directly without additional hops.
+
+IMHO client-side load balancing is the 5% use case. Let me explain.
+
+What we want is a way to do scalable load-balancing ideally without any additional appliances and client libraries. In most cases we probably don’t care about the extra hop with a load balancer in the middle (think about it.. probably 99% of your apps are probably deployed this way right now). We could get into a situation where a call to service A calls service B which calls service C, and D, and E, and you get the picture. In this case if each one took an extra hop we’d incur lots of additional latency. So a possible solution could be “remove the extra hops”.. and it is… but not just in the hops to load balancers: in the number of calls you have to make to downstream services :) Follow my blog on event-driven systems and the discussion around Autonomy vs Authority to see where I’m going with that :)
+
+Using Kubernetes Services as we did in the Service Discovery section above, we accomplish proper load balancing (again, without all of the overhead of the service registries, custom clients, DNS drawbacks, etc). When we interact with a Kubernetes Service via its DNS (or IP), Kubernetes will by default load balance across the pods in the cluster (remember, the cluster is defined by the labels and label selectors). If you don’t want the extra hops in the load balancing, no worries; this virtual IP is routed directly to the Pods, it does not hit a physical network
+
+Yay! Easy for the 95% use case. And chances are, you’re in the 95% distribution of use cases, so don’t need to over-engineer things. Keep it simple.
+
+What about that 5% case? You may have a case where you have to make some business decision at runtime about which exact backend endpoint within a cluster you really want to call. Basically you want to use some custom algorithm that’s more complicated than just “round robin”, “random”, “sticky-session” and is specific to your application. Use client-side load balancing for that. In this model, you can still leverage Kubernetes’ service discovery to find out which pods are in the cluster and then use your own code to decide which pod to call directly (based on labels, etc). The Kubeflix project from the fabric8.io community has discovery plugins for using Ribbon, for example, to get a list of all the pods for a service from the Kubernetes REST API and then let users use Java code to make business decisions about which pod to call. The same thing can be done for other languages and just use the Kubernetes REST API to query the pods, etc. For these use-cases it can make sense to invest in client-specific discovery libraries. Even more appropriate is to break this custom logic into its own module so its dependencies are separate from the application. With Kubernetes, you can deploy this separate module as a sidecar to your application/service and keep the custom load balancing logic there.
+
+
+	
+	
+	Disadvantages with Netflix oss compared to Orchestrator like k8s
+		Most of them will work with java only 
+		heavy weight
+	
+
+Refer image in 
+https://netflixtechblog.com/netflix-oss-and-spring-boot-coming-full-circle-4855947713a0	
+
+
+
+
+@LoadBalanced
+Used as a marker annotation indicating that the annotated RestTemplate should use a RibbonLoadBalancerClient for interacting with your service(s).
+
+In turn, this allows you to use "logical identifiers" for the URLs you pass to the RestTemplate. These logical identifiers are typically the name of a service. For example:
+
+restTemplate.getForObject("http://some-service-name/user/{id}", String.class, 1);
+where some-service-name is the logical identifier.
+
+@RibbonClient
+Used for configuring your Ribbon client(s).
+
+Is @RibbonClient required?
+
+No! If you're using Service Discovery and you're ok with all of the default Ribbon settings, you don't even need to use the @RibbonClient annotation.
+
+When should I use @RibbonClient?
+
+There are at least two cases where you need to use @RibbonClient
+
+You need to customize your Ribbon settings for a particular Ribbon client
+You're not using any service discovery
+Customizing your Ribbon settings:
+
+Define a @RibbonClient
+
+@RibbonClient(name = "some-service", configuration = SomeServiceConfig.class)
+name - set it to the same name of the service you're calling with Ribbon but need additional customizations for how Ribbon interacts with that service.
+configuration - set it to an @Configuration class with all of your customizations defined as @Beans. Make sure this class is not picked up by @ComponentScan otherwise it will override the defaults for ALL Ribbon clients.
+See the section "Customizing the RibbonClient` in the Spring Cloud Netflix documentation (link)
+
+Using Ribbon without Service Discovery
+
+If you're not using Service Discovery, the name field of the @RibbonClient annotation will be used to prefix your configuration in the application.properties as well as "logical identifier" in the URL you pass to RestTemplate.
+
+Define a @RibbonClient
+
+@RibbonClient(name = "myservice")
+then in your application.properties
+
+myservice.ribbon.eureka.enabled=false
+myservice.ribbon.listOfServers=http://localhost:5000, http://localhost:5001
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Module 4: Netflix OSS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1207,44 +1437,107 @@ Module 4: Netflix OSS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Load Balancing with Ribbon using Eureka
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html
+https://howtodoinjava.com/spring-cloud/spring-boot-ribbon-eureka/
+https://www.baeldung.com/spring-cloud-rest-client-with-netflix-ribbon
+https://www.javainuse.com/spring/spring_ribbon
+https://www.youtube.com/watch?v=rsrYZ5cEySE
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Load Balancing with Ribbon without Eureka
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://www.baeldung.com/spring-cloud-rest-client-with-netflix-ribbon
+
+Ribbon is a client-side load balancer that gives you a lot of control over the behavior of HTTP and TCP clients. Feign already uses Ribbon, so, if you use @FeignClient, this section also applies.
+
+A central concept in Ribbon is that of the named client. Each load balancer is part of an ensemble of components that work together to contact a remote server on demand, and the ensemble has a name that you give it as an application developer (for example, by using the @FeignClient annotation). On demand, Spring Cloud creates a new ensemble as an ApplicationContext for each named client by using RibbonClientConfiguration. This contains (amongst other things) an ILoadBalancer, a RestClient, and a ServerListFilter.
+
+To include Ribbon in your project, use the starter with a 
+	group ID of org.springframework.cloud and an 
+	artifact ID of spring-cloud-starter-netflix-ribbon
+	
+	
+	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Module 5: Communication between microservices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Introduction to Feign
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+https://www.javainuse.com/spring/spring-cloud-netflix-feign-tutorial
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Configuring Feign
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
-	To train on Webcast as well
+https://www.javainuse.com/spring/spring-cloud-netflix-feign-tutorial
+
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Module 6: Circuit Breakers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
-	When services fail
+	What is bad with retry?
+		blocking threads
+		
+	Fail fast
+		open the circuit
+	Fallback
+	Automatic recovery
+	
+	
+	Answer the following before you solve
+		When to break the circuit?
+		What to do when the circuit breaks?
+		When do you resume?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Circuit Breakers - Hystrix
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://www.javainuse.com/spring/springcloud
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Access services using Feign REST client
+	
+	
+	Feign allows you to abstract the mechanics of calling a REST service. Once you configure and annotate the Feign interface, you can call a REST service by making a simple Java function call. The actual implementation of making a REST call is handled at runtime by Feign. This means that the implementation can be configured without changing your business logic code.
+
+By just changing the Feign configuration in a Java or using properties you can add encoding/decoding, logging, and change the REST call implementation library. All this is done through configuration only, while the business logic that calls the service remains unchanged. Since Feign uses standard Java interfaces, it's also easy to mock them during unit tests.
+
+1.URLs are not hardcoded.
+
+2.you don't have to write unit test cases for feign as there is no code to test however you have to write integration tests.
+
+3.we can use Eureka Client ID instead of the URL.
+	Can be done with RestTemplate
+
+4.Feign handled the actual code.
+
+5.Feign integrates with Ribbon and Eureka Automatically.
+
+6.Feign provides a very easy way to call RESTful services.
+
+
+Disadvantage with Feign 
+	Does not support caching based on Cache Control headers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Module 7: Sleuth and Zipkin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://www.javainuse.com/spring/springcloud
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Logging with Sleuth
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Monitor with Zipkin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://www.youtube.com/watch?v=Oxfk3gns5qo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Module 8 : Spring Scheduler and Integration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1254,13 +1547,159 @@ Module 8 : Spring Scheduler and Integration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Scheduler - Cron and Delay
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://www.baeldung.com/spring-scheduled-tasks
+https://www.baeldung.com/spring-task-scheduler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Integration - FTP ,SSH,HTTPS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Testing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+https://www.youtube.com/watch?v=RbZvXCAtMus
+https://www.springboottutorial.com/
+https://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
+
+
+Testing
+Junit
+	https://www.springboottutorial.com/junit-tutorial-for-beginners
+Mockito
+	https://www.springboottutorial.com/mockito-tutorial-for-beginners
+UnitTesting for beginners
+	https://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Flux
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Priority1
+	https://howtodoinjava.com/spring-webflux/spring-webflux-tutorial/
+
+Others
+	https://www.educative.io/blog/spring-webflux-tutorial
+	
+	
+	The reactive-stack web framework, Spring WebFlux, 
+		added Spring 5.0. 
+		Fully non-blocking, 
+		Supports reactive streams back pressure
+		Runs on such servers like Netty, Undertow, and Servlet 3.1+ containers
+		
+	1. Reactive Programming
+	-----------------------
+Reactive programming	
+	Programming paradigm 
+	Promotes 
+		asynchronous, 
+		non-blocking, 
+		event-driven 
+			approach to data processing. 
+	Model data and events as observable data streams 
+	Implementing data processing routines to react to the changes in those streams.
+
+
+	1.1. Blocking vs non-blocking (async) request processing
+	1.1.1. Blocking request processing
+	----------------------------------
+In traditional MVC applications
+	When a request come to server, a servlet thread is created. 
+	It delegates the request to worker threads for 
+		I/O operations such as database access etc. 
+	While worker threads are busy
+		servlet thread (request thread) remain in 
+			waiting status and thus it is blocked. 
+	It is also called synchronous request processing.
+Check the image
+	https://howtodoinjava.com/spring-webflux/spring-webflux-tutorial/
+
+As server can have some finite number of request threads
+	it limits the server capability to process that number of requests at maximum server load. 
+	It may hamper the performance and limit the full utilization of server capability.
+
+
+	1.1.2. Non-blocking request processing
+	--------------------------------------
+In non-blocking or asynchronous request processing, 
+	no thread is in waiting state. 
+	Generally only one request thread is enough receiving the request.
+
+All incoming requests come with a event handler and call back information. 
+Request thread delegates the incoming requests to a thread pool 
+	(generally small number of threads) 
+	which delegate the request to it’s handler function 
+	and immediately start processing other incoming requests from request thread.
+
+When the handler function is complete, 
+	one of thread from pool collect the response and pass it to the call back function.
+
+Non-blocking nature of threads helps in scaling the performance of the application. Small number of threads means less memory utilization and also less context switching as well.
+	
+	
+	
+1.2. What is reactive programming?
+The term, “reactive,” refers to programming models that are built around reacting to changes. It is build around publisher-subscriber pattern (observer pattern). In reactive style of programming, we make a request for resource and start performing other things. When the data is available, we get the notification along with data inform of call back function. In callback function, we handle the response as per application/user needs.
+
+One important thing to remember is back pressure. In non-blocking code, it becomes important to control the rate of events so that a fast producer does not overwhelm its destination.
+
+Reactive web programming is great for applications that have streaming data, and clients that consume it and stream it to their users. It is not great for developing traditional CRUD applications. If you’re developing the next Facebook or Twitter with lots of data, a reactive API might be just what you’re looking for.
+
+2. Reactive Streams API
+The new Reactive Streams API was created by engineers from Netflix, Pivotal, Lightbend, RedHat, Twitter, and Oracle, among others and is now part of Java 9. It defines four interfaces:
+
+Publisher: Emits a sequence of events to subscribers according to the demand received from its subscribers. A publisher can serve multiple subscribers.
+It has a single method:
+
+Publisher.java
+public interface Publisher<T> 
+{
+    public void subscribe(Subscriber<? super T> s);
+}
+Subscriber: Receives and processes events emitted by a Publisher. Please note that no notifications will be received until Subscription#request(long) is called to signal the demand.
+It has four methods to handle various kind of responses received.
+
+Subscriber.java
+public interface Subscriber<T> 
+{
+    public void onSubscribe(Subscription s);
+    public void onNext(T t);
+    public void onError(Throwable t);
+    public void onComplete();
+}
+Subscription: Defines a one-to-one relationship between a Publisher and a Subscriber. It can only be used once by a single Subscriber. It is used to both signal desire for data and cancel demand (and allow resource cleanup).
+Subscription.java
+public interface Subscription<T> 
+{
+    public void request(long n);
+    public void cancel();
+}
+Processor: Represents a processing stage consisting of both a Subscriber and a Publisher and obeys the contracts of both.
+Processor.java
+public interface Processor<T, R> extends Subscriber<T>, Publisher<R> 
+{
+}
+Two popular implementations of reactive streams are RxJava (https://github.com/ReactiveX/RxJava) and Project Reactor (https://projectreactor.io/).
+
+3. What is Spring WebFlux ?
+Spring WebFlux is parallel version of Spring MVC and supports fully non-blocking reactive streams. It support the back pressure concept and uses Netty as inbuilt server to run reactive applications. If you are familiar with Spring MVC programming style, you can easily work on webflux also.
+
+Spring webflux uses project reactor as reactive library. Reactor is a Reactive Streams library and, therefore, all of its operators support non-blocking back pressure. It is developed in close collaboration with Spring.
+
+Spring WebFlux heavily uses two publishers :
+
+Mono: Returns 0 or 1 element.
+Mono<String> mono = Mono.just("Alex");
+Mono<String> mono = Mono.empty();
+Flux: Returns 0…N elements. A Flux can be endless, meaning that it can keep emitting elements forever. Also it can return a sequence of elements and then send a completion notification when it has returned all of its elements.
+Flux<String> flux = Flux.just("A", "B", "C");
+Flux<String> flux = Flux.fromArray(new String[]{"A", "B", "C"});
+Flux<String> flux = Flux.fromIterable(Arrays.asList("A", "B", "C"));
+ 
+//To subscribe call method
+ 
+flux.subscribe();
+In Spring WebFlux, we call reactive APIs/functions that return monos and fluxes and your controllers will return monos and fluxes. When you invoke an API that returns a mono or a flux, it will return immediately. The results of the function call will be delivered to you through the mono or flux when they become available.
+
+To build a truly non-blocking application, we must aim to create/use all of its components as non-blocking i.e. client, controller, middle services and even the database. If one of them is blocking the requests, our aim will be defeated.
+
+
+	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
