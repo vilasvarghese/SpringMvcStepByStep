@@ -1298,7 +1298,7 @@ Refer table in https://spring.io/projects/spring-cloud#overview
 2. Add the "dependency management" and version to the pom.xml
 ---------------------------------------------
 <properties>
-    <spring.cloud-version>Hoxton.SR8</spring.cloud-version>
+    <spring.cloud-version>2020.02.01</spring.cloud-version>
 </properties>
 <dependencyManagement>
     <dependencies>
@@ -1443,22 +1443,32 @@ https://www.baeldung.com/spring-cloud-rest-client-with-netflix-ribbon
 https://www.javainuse.com/spring/spring_ribbon
 https://www.youtube.com/watch?v=rsrYZ5cEySE
 
-
+Steps.
+1. Add ribbon in classpath/pom.xml
+2. Enable DiscoverClient and Disable EurekaClient
+3. Disable Loadbalanced for RestTemplate
+4. Use LoadBalancerClient to get the instance from Eureka.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Load Balancing with Ribbon without Eureka
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 https://www.baeldung.com/spring-cloud-rest-client-with-netflix-ribbon
 
-Ribbon is a client-side load balancer that gives you a lot of control over the behavior of HTTP and TCP clients. Feign already uses Ribbon, so, if you use @FeignClient, this section also applies.
+Ribbon is a client-side load balancer 
+Gives a lot of control over the behavior of HTTP and TCP clients. 
+Feign already uses Ribbon.
 
-A central concept in Ribbon is that of the named client. Each load balancer is part of an ensemble of components that work together to contact a remote server on demand, and the ensemble has a name that you give it as an application developer (for example, by using the @FeignClient annotation). On demand, Spring Cloud creates a new ensemble as an ApplicationContext for each named client by using RibbonClientConfiguration. This contains (amongst other things) an ILoadBalancer, a RestClient, and a ServerListFilter.
+A central concept in Ribbon is that of the named client. 
+Each load balancer is part of an ensemble of components that work together to contact a remote server on demand, and the ensemble has a name that you give it as an application developer (for example, by using the @FeignClient annotation). On demand, Spring Cloud creates a new ensemble as an ApplicationContext for each named client by using RibbonClientConfiguration. This contains (amongst other things) an ILoadBalancer, a RestClient, and a ServerListFilter.
 
 To include Ribbon in your project, use the starter with a 
 	group ID of org.springframework.cloud and an 
 	artifact ID of spring-cloud-starter-netflix-ribbon
 	
 	
+Why use Ribbon	
+	https://gvnix.medium.com/load-balancing-by-ribbon-in-spring-boot-8862e4d70ed1
 	
+https://o7planning.org/11739/undertanding-load-balancing-in-spring-cloud-with-ribbon-and-example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Module 5: Communication between microservices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1534,6 +1544,7 @@ https://www.javainuse.com/spring/springcloud
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Logging with Sleuth
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	https://www.javainuse.com/spring/cloud-sleuth
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Monitor with Zipkin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1549,9 +1560,42 @@ Module 8 : Spring Scheduler and Integration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 https://www.baeldung.com/spring-scheduled-tasks
 https://www.baeldung.com/spring-task-scheduler
+https://docs.spring.io/spring-framework/docs/3.1.x/spring-framework-reference/html/scheduling.html
+https://howtodoinjava.com/spring-core/spring-scheduled-annotation/
+https://docs.spring.io/spring-framework/docs/3.1.x/spring-framework-reference/html/scheduling.html
+
+Reference: my scheduler repo.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 	Integration - FTP ,SSH,HTTPS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+FTP
+	File transfer protocol
+	FTPS
+		Secured FTP
+	SFTP
+		FTP based on SSH.
+	Use SFTP as much as possible
+	Authenticate using 
+		credentials.
+		certificates
+	
+	Reference for SFTP: https://www.youtube.com/watch?v=j0AG4KrzCgs
+	
+	FTP Reference: https://www.baeldung.com/java-ftp-client
+	Another reference: 
+	https://github.com/kuljaninemir/spring-boot-ftp-client
+	https://spring.io/blog/2020/03/18/spring-tips-remote-file-system-integrations-ftp-with-spring-integration
+	
+SSH
+	https://www.baeldung.com/java-ssh-connection
+	https://stackoverflow.com/questions/42107640/send-and-receive-files-from-ftp-in-spring-boot
+	
+HTTPS:
+	https://www.baeldung.com/spring-boot-https-self-signed-certificate
+	https://www.thomasvitale.com/https-spring-boot-ssl-certificate/
+	https://docs.spring.io/spring-cloud-skipper/docs/1.0.0.BUILD-SNAPSHOT/reference/html/configuration-security-enabling-https.html
+	
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Testing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1567,7 +1611,70 @@ Mockito
 	https://www.springboottutorial.com/mockito-tutorial-for-beginners
 UnitTesting for beginners
 	https://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
+	
+Official documentation for junit5	
+	https://junit.org/junit5/docs/current/user-guide/
+	
+	
+	JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage
 
+
+JUnit Platform 
+	Foundation for launching testing frameworks on the JVM. 
+	Also defines TestEngine API 
+		develop testing framework that runs on the platform. 
+		Platform provides a Console Launcher 
+			Launch the platform from the command line and a JUnit 4 based Runner for running any TestEngine on the platform in a JUnit 4 based environment. 
+		First-class support for the JUnit Platform also exists in popular IDEs 
+			IntelliJ IDEA, 
+			Eclipse, 
+			NetBeans
+			Visual Studio Code
+		and 
+			build tools 
+				Gradle
+				Maven
+				Ant.
+				
+JUnit Jupiter 
+	Combination of 
+		new programming model and 
+		extension model 
+			for writing tests and extensions in JUnit 5. 
+	Provides a TestEngine for running Jupiter based tests on the platform.
+
+JUnit Vintage 
+	Provides a TestEngine for running 
+		JUnit 3 and 
+		JUnit 4 based 
+			tests on the platform.
+
+	Supported Java Versions
+		JUnit 5 requires Java 8 (or higher) at runtime. However, you can still test code that has been compiled with previous versions of the JDK.
+
+--------------------------------------
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import example.util.Calculator;
+import org.junit.jupiter.api.Test;
+class MyFirstJUnitJupiterTests {
+
+    private final Calculator calculator = new Calculator();
+
+    @Test
+    void addition() {
+        assertEquals(2, calculator.add(1, 1));
+    }
+
+}
+--------------------------------------
+
+
+More details: https://junit.org/junit5/docs/current/user-guide/
+Assert documentation:
+	https://junit.org/junit5/docs/5.0.1/api/org/junit/jupiter/api/Assertions.html
+AssertJ
+	https://assertj.github.io/doc/
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 Flux
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

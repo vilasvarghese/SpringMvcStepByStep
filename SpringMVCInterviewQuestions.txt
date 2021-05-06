@@ -1,0 +1,282 @@
+1. What is the Spring framework?
+	Spring is an open-source framework that was built to simplify application development. It has a layered structure which allows the developer to be selective about the components they use. It has three main components – Spring Core, Spring AOP, and Spring MVC.
+
+2. What are the main features of Spring framework?
+ 
+
+Spring framework offers a lot of features to make the developer’s life easy. Some of them are:
+
+	Lightweight: Spring is extremely lightweight, the basic version is around 1MB, with negligible processing overheads.
+	Dependency Injection (DI) and Inversion of Control (IoC): Dependency Injection or Inversion of Control is one of the most important features of Spring. Using IoC, the developers don’t need to create a complete environment for the object and its dependencies; they can simply create and test the object they are handling at the given point of time. Object dependencies will be included or called upon when the need arises.
+	Aspect-Oriented Programming: Spring supports Aspect-Oriented Programming. AOP isolates secondary functions from the programmer’s business logic. This not only provides modularity but also makes the code maintainable.
+	MVC architecture: Spring comes with an MVC framework for web-applications. This framework is highly configurable using various technologies like JSP, Tiles, iText, and POI.
+	JDBC exception handling: Spring comes with a predefined JDBC abstraction layer which simplifies the overall exception handling process.
+	
+3. Explain a bit more about Dependency Injection.
+	Inversion of Control or Dependency Injection aims to simplify the process of object creation by following a simple concept – don’t create objects, just describe how they should be created. Using IoC, the objects are given their dependencies at build-time by an external entity that is responsible for coordinating each object in the system. In essence, we’re injecting dependencies into objects using IOC or Dependency Injection.
+
+
+4. 4. Explain the different types of Dependency Injections in Spring? When to use which?
+ 
+
+	Spring provides the developers with the following two types of dependency injections:
+
+	Constructor-based DI: Constructor-based DI is accomplished by passing a number of arguments (each of which represents a dependency on other class) to a class’s constructor. Simply, dependencies are given in the form of constructor parameters.
+	Setter-based DI: When you are working with a no-argument constructor, you will set values by passing arguments through setter function to instantiate the bean under consideration, this is called setter-based dependency injection.
+	When will you use which one of these, boils down to your requirements. However, it is recommended to use Setter-based DI for optional dependencies and Constructor-based DI for mandatory dependencies.
+	
+	
+5. What is the Spring MVC framework?
+ 
+
+	Spring MVC is one of the core components of the Spring framework. It comes with ready to use components and elements that help developers build flexible and robust web applications. As the name suggests, the MVC architecture separates the different aspects of the application – input logic, business logic, and UI logic. It also provides a loose coupling between the M, V, and C of the application.	
+	
+	
+6. What are some benefits of Spring MVC framework over other MVC frameworks?
+ 
+
+	The Spring MVC framework has some clear benefits over other frameworks. Some of the benefits are:
+
+	Clear separation of roles –  There is a specialised object for every role, thus providing a clear separation of roles.
+	Reusable business code – With Spring MVC, you don’t need to duplicate your code. You can use your existing objects as commands instead of mirroring them in order to extend a particular framework base class.
+	Customizable binding and validation
+	Customizable locale and theme resolution
+	Customizable handler mapping and view resolution
+	From Spring 2.0 onwards, the framework comes with a JSP form tag library which makes writing forms in JSP pages much easier.	
+	
+
+7. What is DispatcherServlet?
+ 
+
+	Spring MVC framework is request-driven and is designed around a central Servlet that handles all the HTTP requests and responses. The DispatcherServlet, however, does a lot more than just that. It seamlessly integrates with the IoC container and allows you to use each feature of Spring.
+	On receiving an HTTP request, the DispatcherServlet consults HandlerMapping (these are the configuration files) to call the appropriate Controller. Then, the controller calls appropriate service methods to set the Model data. It also returns the view name to DispatcherServlet. DispatcherServlet, with the help of ViewResolver, picks up the defined view for the request. Once the view is finalized, the DispatcherServlet passes the Model data to View – where it is finally rendered on the browser.
+
+
+8. What is the front controller class of the Spring MVC?
+ 
+
+	A front controller is a controller which handles all requests for a Web application. When it comes to Spring MVC, DispatcherServlet is that front controller. When a web request is sent to a Spring MVC application, the DIspatcherServlet takes care of everything. First, it takes the request. Then, it organizes the different components like request handlers, controllers, view resolvers, and such – all needed to handle the request. And finally, it renders the content on the browser.	
+	
+	
+9. What is a Viewresolver pattern and how does it work in MVC?
+ 
+
+View Resolver is a J2EE pattern which allows the applications to dynamically choose technology for rendering the data on the browser (View). Any technology like HTML, JSP, Tapestry, XSLT, JSF, or any other such technology can be used for View. The View Resolver pattern holds the mapping of different views. The Controller returns the name of the View which is then passed to View Resolver for selecting the appropriate technology.	
+	
+	
+	
+	
+10. How will you compare the MVC framework to the three-tier architecture?
+ 
+
+A Three-tier architecture is an architecture style whereas MVC is a design pattern.
+3 tier architechture with mvc part
+Having said that, in larger applications, MVC forms the presentation tier of a three-tier architecture. The Model, View, and Controller are concerned only with the presentation – they use the middle tier to populate their models.	
+	
+	
+	
+11. What do you mean by a “Bean” in the context of Spring framework?
+ 
+
+Any class that is initialised by the IoC container is known as a bean in Spring. The lifecycle of a Spring Bean is managed by Spring IoC Container.
+
+12. What is a “Scope” in reference to Spring Beans?
+ 
+
+Spring Beans comes with following five scopes:
+
+	Prototype: Whenever there’s a request for a bean, a separate prototype is created each time.
+	Request: It is like the previous scope, but only for web-based applications. For each HTTP request, Spring creates a new bean instance.
+	Singleton: There’s only one bean created for every container, and it acts as the default scope of that bean. In all these instances, the beans cannot use a shared instance variable as it can lead to data-inconsistency.
+	Session: A bean is created for every HTTP session
+	Global-session: Global session is created for Portlet applications.
+	The Spring framework is extendable, that is, you can create your own scope as well. The “scope” attribute of the bean element is used to define the scope.
+	
+13. Why Should We Use Spring MVC?
+	Spring MVC implements a clear separation of concerns that allows us to develop and unit test our applications easily.
+
+
+	The concepts like:
+
+		Dispatcher Servlet
+		Controllers
+		View Resolvers
+		Views, Models
+		ModelAndView
+		Model and Session Attributes	
+		
+14. Role of the @Autowired Annotation?
+	The @Autowired annotation can be used with fields or methods for injecting a bean by type. This annotation allows Spring to resolve and inject collaborating beans into your bean.
+
+	For more details, please refer to the tutorial about @Autowired in Spring.
+
+
+15. Explain a Model Attribute
+	The @ModelAttribute annotation is one of the most important annotations in Spring MVC. It binds a method parameter or a method return value to a named model attribute and then exposes it to a web view.
+
+	If we use it at the method level, it indicates the purpose of that method is to add one or more model attributes.
+
+	On the other hand, when used as a method argument, it indicates the argument should be retrieved from the model. When not present, we should first instantiate it and then add it to the model. Once present in the model, we should populate the arguments fields from all request parameters that have matching names.
+
+
+16. Difference Between @Controller and @RestController?
+	The main difference between the @Controller and @RestController annotations is that the @ResponseBody annotation is automatically included in the @RestController. This means that we don't need to annotate our handler methods with the @ResponseBody. We need to do this in a @Controller class if we want to write response type directly to the HTTP response body.
+
+17. Describe a PathVariable
+	We can use the @PathVariable annotation as a handler method parameter in order to extract the value of a URI template variable.
+
+	For example, if we want to fetch a user by id from the www.mysite.com/user/123, we should map our method in the controller as /user/{id}:
+
+	@RequestMapping("/user/{id}")
+	public String handleRequest(@PathVariable("id") String userId, Model map) {}
+
+	The @PathVariable has only one element named value. It's optional and we use it to define the URI template variable name. If we omit the value element, then the URI template variable name must match the method parameter name.
+
+	It's also allowed to have multiple @PathVariable annotations, either by declaring them one after another:
+
+	@RequestMapping("/user/{userId}/name/{userName}")
+	public String handleRequest(@PathVariable String userId,
+	  @PathVariable String userName, Model map) {}
+	or putting them all in a  Map<String, String> or MultiValueMap<String, String>:
+
+	@RequestMapping("/user/{userId}/name/{userName}")
+	public String handleRequest(@PathVariable Map<String, String> varsMap, Model map) {}
+
+18. @RequestBody and the @ResponseBody?
+The @RequestBody annotation, used as a handler method parameter, binds the HTTP Request body to a transfer or a domain object. Spring automatically deserializes incoming HTTP Request to the Java object using Http Message Converters.
+Read more details: https://www.baeldung.com/spring-request-response-body
+
+
+19.  Model, ModelMap and ModelAndView?
+The Model interface defines a holder for model attributes. The ModelMap has a similar purpose, with the ability to pass a collection of values. It then treats those values as if they were within a Map. We should note that in Model (ModelMap) we can only store data. We put data in and return a view name.
+
+
+On the other hand, with the ModelAndView, we return the object itself. We set all the required information, like the data and the view name, in the object we're returning.
+
+When we use the @ResponseBody annotation on a handler method in the Spring MVC controller, it indicates that we'll write the return type of the method directly to the HTTP response body. We'll not put it in a Model, and Spring won't interpret as a view name.
+
+https://www.baeldung.com/spring-mvc-model-model-map-model-view
+
+Continue from 9 
+https://www.baeldung.com/spring-mvc-interview-questions
+
+
+20.  Difference Between 
+	@Controller, 
+	@Component, 
+	@Repository, 
+	@Service 
+		Annotations in Spring?
+		
+		
+		According to the official Spring documentation, @Component is a generic stereotype for any Spring-managed component. @Repository, @Service, and @Controller are specializations of @Component for more specific use cases, for example, in the persistence, service, and presentation layers, respectively.
+
+Let's take a look at specific use cases of last three:
+
+@Controller – indicates that the class serves the role of a controller, and detects @RequestMapping annotations within the class
+@Service – indicates that the class holds business logic and calls methods in the repository layer
+@Repository – indicates that the class defines a data repository; its job is to catch platform-specific exceptions and re-throw them as one of Spring’s unified unchecked exceptions
+
+
+21. MultipartResolver and When Should We Use It?
+The MultipartResolver interface is used for uploading files. The Spring framework provides one MultipartResolver implementation for use with Commons FileUpload and another for use with Servlet 3.0 multipart request parsing.
+
+	
+22.  Main Features of Spring Boot?	
+	
+	Starters – a set of dependency descriptors to include relevant dependencies at a go
+	Auto-configuration – a way to automatically configure an application based on the dependencies present on the classpath
+	Actuator – to get production-ready features such as monitoring
+	Security
+	Logging
+	
+23. Differences Between Spring and Spring Boot?
+		The Spring Framework provides multiple features that make the development of web applications easier. These features include dependency injection, data binding, aspect-oriented programming, data access, and many more.
+
+Over the years, Spring has been growing more and more complex, and the amount of configuration such application requires can be intimidating. This is where Spring Boot comes in handy – it makes configuring a Spring application a breeze.
+
+Essentially, while Spring is unopinionated, Spring Boot takes an opinionated view of the platform and libraries, letting us get started quickly.
+
+Here are two of the most important benefits Spring Boot brings in:
+
+Auto-configure applications based on the artifacts it finds on the classpath
+Provide non-functional features common to applications in production, such as security or health checks
+Please check one of our other tutorials for a detailed comparison between vanilla Spring and Spring Boot.
+
+
+
+
+24. Set up a Spring Boot Application with STS?
+
+25. What is Spring Initializr?
+
+26. What Spring Boot Starters Are Available out There?
+	Name some of them you used..
+	
+27. How to Disable a Specific Auto-Configuration?
+@EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
+public class MyConfiguration { }
+
+28. How to Deploy Spring Boot Web Applications as Jar and War Files?
+	pom.xml
+	
+29. How to Use Spring Boot for Command Line Applications?
+	spring command line
+	java command line
+	
+30. What Are Possible Sources of External Configuration?
+
+31. How to Write Integration Tests?
+When running integration tests for a Spring application, we must have an ApplicationContext.
+
+To make our life easier, Spring Boot provides a special annotation for testing – @SpringBootTest. This annotation creates an ApplicationContext from configuration classes indicated by its classes attribute.
+
+In case the classes attribute isn't set, Spring Boot searches for the primary configuration class. The search starts from the package containing the test up until it finds a class annotated with @SpringBootApplication or @SpringBootConfiguration.
+
+For detailed instructions, check out our tutorial on testing in Spring Boot.
+
+32.  What Is Spring Boot Actuator Used For?
+Essentially, Actuator brings Spring Boot applications to life by enabling production-ready features. These features allow us to monitor and manage applications when they're running in production.
+
+Integrating Spring Boot Actuator into a project is very simple. All we need to do is to include the spring-boot-starter-actuator starter in the pom.xml file:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+Spring Boot Actuator can expose operational information using either HTTP or JMX endpoints. Most applications go for HTTP, though, where the identity of an endpoint and the /actuator prefix form a URL path.
+
+Here are some of the most common built-in endpoints Actuator provides:
+
+env: Exposes environment properties
+health: Shows application health information
+httptrace: Displays HTTP trace information
+info: Displays arbitrary application information
+metrics: Shows metrics information
+loggers: Shows and modifies the configuration of loggers in the application
+mappings: Displays a list of all @RequestMapping paths
+Please refer to our Spring Boot Actuator tutorial for a detailed rundown.
+
+
+33.  How Can You Change the Default Port in Spring Boot?
+We can change the default port of a server embedded in Spring Boot using one of these ways:
+
+using a properties file – we can define this in an application.properties (or application.yml) file using the property server.port
+programmatically – in our main @SpringBootApplication class, we can set the server.port on the SpringApplication instance
+using the command line – when running the application as a jar file, we can set the server.port as a java command argument:
+java -jar -Dserver.port=8081 myspringproject.jar
+
+
+34. Which Embedded Servers does Spring Boot Support, and How to Change the Default?
+As of date, Spring MVC supports Tomcat, Jetty, and Undertow. Tomcat is the default application server supported by Spring Boot's web starter.
+
+35. How to connect Spring Boot to the database using JPA?
+Spring Boot provides spring-boot-starter-data-jpa starter to connect Spring application with relational database efficiently. You can use it into project POM (Project Object Model) file.
+
+
+https://github.com/in28minutes/spring-interview-guide
+
+
+https://github.com/learning-zone/spring-interview-questions
+https://github.com/rahulmoundekar/Spring-Boot-Interview-Questions
+https://github.com/pos-my/boot-rest-api-interview
